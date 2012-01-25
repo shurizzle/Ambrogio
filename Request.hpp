@@ -8,15 +8,15 @@
 
 namespace Ambrogio {
   class Request {
-    FCGX_Request _request;
+    FCGX_Request *_request;
     std::vector<std::string> _names;
     std::vector<std::string> _matches;
     bool _named;
 
-    public:
-    Request(FCGX_Request&, std::vector<std::string>, std::vector<std::string>);
-    Request(FCGX_Request&, std::vector<std::string>);
-    Request(FCGX_Request&);
+  public:
+    Request(FCGX_Request*, std::vector<std::string>, std::vector<std::string>);
+    Request(FCGX_Request*, std::vector<std::string>);
+    Request(FCGX_Request*);
     void setMatches(std::vector<std::string>, std::vector<std::string>);
     void setMatches(std::vector<std::string>);
     ~Request(void);

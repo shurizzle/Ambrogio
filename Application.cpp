@@ -1,4 +1,5 @@
 #include "Application.hpp"
+#include <boost/thread.hpp>
 
 namespace Ambrogio {
   void
@@ -28,22 +29,31 @@ namespace Ambrogio {
 #undef _ROUTE
 
   void
-  Application::run(void) {
-    std::string port=":9000";
-    int listenQueueBacklog = 400;
+  Application::run(std::string path) {
     FCGX_Init();
-    int listen_socket = FCGX_OpenSocket(port.c_str(), listenQueueBacklog);
-    FCGX_InitRequest(&_request, listen_socket, 0);
+    run(FCGX_OpenSocket(path.c_str(), 400));
+  }
 
-    while (FCGX_Accept_r(&_request) == 0) {
-      {
-        Request req(_request);
-        Response res(_request.out, &_router);
-        printParams(_request.envp);
-        _router.dispatch(req, res);
-      }
-      FCGX_InitRequest(&_request, listen_socket, 0);
+  void
+  Application::__run_session(FCGX_Request *request, Router *router) {
+    Request req(request);
+    Response res(request->out, router);
+    printParams(request->envp);
+    router->dispatch(req, res);
+  }
+
+  void
+  Application::run(int listen_socket) {
+    FCGX_Request *request = new FCGX_Request();
+    FCGX_InitRequest(request, listen_socket, 0);
+
+    while (FCGX_Accept_r(request) == 0) {
+      boost::thread(&::Ambrogio::Application::__run_session, request, &_router);
+      request = new FCGX_Request();
+      FCGX_InitRequest(request, listen_socket, 0);
     }
+
+    { Request req(request); }
   }
 
   void
@@ -64,7 +74,12 @@ namespace Ambrogio {
   }
 
   void
-  run(Application& app) {
-    app.run();
+  run(Application& app, int on) {
+    app.run(on);
+  }
+
+  void
+  run(Application& app, std::string on) {
+    app.run(on);
   }
 }

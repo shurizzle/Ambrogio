@@ -1,6 +1,6 @@
 SOURCES	= Application.cpp Router.cpp Request.cpp Response.cpp
 OBJECTS	= $(SOURCES:.cpp=.o)
-LDFLAGS	= -lboost_regex -lfcgi++
+LDFLAGS	= -lboost_regex -lboost_thread -lfcgi
 CFLAGS	= -Wall
 TARGET	= libambrogio
 AR		 ?= ar
@@ -34,7 +34,7 @@ clean-test:
 clean: clean-output clean-objs clean-target clean-test
 
 test: all
-	g++ -std=c++0x -DUSE_CPP11=1 -L. -o test test.cpp -lfcgi -lboost_regex -lambrogio
+	g++ -std=c++0x -DUSE_CPP11=1 -L. -o test test.cpp -lfcgi -lboost_regex -lboost_thread -lambrogio
 	./test
 
 .PHONY: all $(TARGET)-shared $(TARGET)-static test clean

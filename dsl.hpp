@@ -21,7 +21,7 @@
 
 # define RE(str) CPP11LIB::regex(str)
 
-# define RUN() run(application); return 0; }
+# define RUN(on) run(application, on); return 0; }
 
 # ifdef USE_CPP11
 #   define DEFAULT(body) application.defaultHandler([](Ambrogio::Request& request, Ambrogio::Response& response) { body; });

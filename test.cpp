@@ -13,8 +13,8 @@ GET("/merda/", {
 
 GET("/merda/sburro", ERROR(500))
 
-GET("/merda/:ciccio", response << request["ciccio"])
+GET("/merda/:ciccio", response << "<html><body><h1>" << request["ciccio"] << "</h1></body></html>")
 
 //GET(RE("^/+merda(.+?)$"), response << request[0])
 
-RUN()
+RUN(":9000")

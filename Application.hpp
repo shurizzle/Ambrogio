@@ -2,7 +2,7 @@
 #define __AMBROGIO_APPLICATION_HPP
 
 #include "Router.hpp"
-#include <fcgi_stdio.h>
+#include <fcgiapp.h>
 
 namespace Ambrogio {
 #define FUNC void (*)(Request&, Response&)
@@ -10,9 +10,9 @@ namespace Ambrogio {
     Router _router;
     FCGX_Request _request;
 
-    void printParams(FCGX_ParamArray);
+    static void printParams(FCGX_ParamArray);
 
-    public:
+  public:
     void route(Method, std::string, FUNC);
     void route(Method, CPP11LIB::regex, FUNC);
     void HEAD(std::string, FUNC);
@@ -27,11 +27,14 @@ namespace Ambrogio {
     void DELETE(CPP11LIB::regex, FUNC);
     void onError(int, void (*)(Request&, Response&));
     void defaultHandler(void (*)(Request&, Response&));
-    void run(void);
+    void run(std::string);
+    void run(int);
+    static void __run_session(FCGX_Request*, Router*);
   };
 #undef FUNC
 
-  void run(Application&);
+  void run(Application&, std::string);
+  void run(Application&, int);
 }
 
 #endif // __AMBROGIO_APPLICATION_HPP

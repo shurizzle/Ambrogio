@@ -3,17 +3,17 @@
 #include <cstdlib>
 
 namespace Ambrogio {
-  Request::Request(FCGX_Request& req) {
+  Request::Request(FCGX_Request *req) {
     _request = req;
     _named = false;
   }
 
-  Request::Request(FCGX_Request& req, std::vector<std::string> matches) {
+  Request::Request(FCGX_Request *req, std::vector<std::string> matches) {
     _request = req;
     setMatches(matches);
   }
 
-  Request::Request(FCGX_Request& req, std::vector<std::string> names, std::vector<std::string> matches) {
+  Request::Request(FCGX_Request *req, std::vector<std::string> names, std::vector<std::string> matches) {
     _request = req;
     setMatches(names, matches);
   }
@@ -49,7 +49,9 @@ namespace Ambrogio {
   }
 
   Request::~Request(void) {
-    FCGX_Finish_r(&_request);
+    FCGX_Finish_r(_request);
+    FCGX_Free(_request, 1);
+    delete _request;
   }
 
   std::string
@@ -59,7 +61,7 @@ namespace Ambrogio {
 
   std::string
   Request::getParam(const char *env) {
-    char *res = FCGX_GetParam(env, _request.envp);
+    char *res = FCGX_GetParam(env, _request->envp);
     if (res == NULL)
       return "";
     return std::string(res);

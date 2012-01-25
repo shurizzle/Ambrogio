@@ -15,8 +15,9 @@ namespace Ambrogio {
     FCGX_Stream *out;
     bool _head_sent, _body_sent;
     Router *_router;
+    std::vector<std::string> segments;
 
-    public:
+  public:
     Response(FCGX_Stream *_out, Router *r) : out(_out), _head_sent(false), _body_sent(false), _router(r) {}
     ~Response(void);
     void writeHeaders(void);
@@ -26,9 +27,6 @@ namespace Ambrogio {
     void append(std::string);
     void runError(int, Request&);
     Response& operator<<(std::string);
-
-    private:
-    std::vector<std::string> segments;
   };
 }
 
