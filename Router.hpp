@@ -40,7 +40,7 @@ namespace Ambrogio {
     void (*func)(Request&, Response&);
 
     route(Method m, CPP11LIB::regex r, void (*f)(Request&, Response&)) :
-      method(m), match(r), func(f), _named(false) {}
+      _named(false), method(m), match(r), func(f) {}
     route(Method m, std::string r, void(*f)(Request&, Response&));
     bool isNamed(void);
     std::vector<std::string> getNames(void);
