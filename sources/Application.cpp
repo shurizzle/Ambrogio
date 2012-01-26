@@ -1,4 +1,4 @@
-#include "Application.hpp"
+#include <Ambrogio/Application.hpp>
 #include <boost/thread.hpp>
 
 namespace Ambrogio {
