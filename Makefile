@@ -35,7 +35,7 @@ make-build-dir:
 
 ambrogio.pc:
 	@echo WRITE ambrogio.pc
-	@echo "prefix=$(PREFIX)" > ambrogio.pc
+	@echo "prefix=$(DESTDIR)/$(PREFIX)" > ambrogio.pc
 	@echo 'exec_prefix=$${prefix}' >> ambrogio.pc
 	@echo 'libdir=$${exec_prefix}/lib' >> ambrogio.pc
 	@echo	'includedir=$${prefix}/include' >> ambrogio.pc
