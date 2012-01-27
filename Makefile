@@ -5,7 +5,9 @@ CFLAGS	= -Wall -I./includes/
 TARGET	= libambrogio
 AR		 ?= ar
 PREFIX ?= /usr
-VERSION	= 0.1
+VMAJOR	= 0
+VMINOR	= 1
+VERSION	= $(VMAJOR).$(VMINOR)
 
 all: $(TARGET).so.$(VERSION) $(TARGET).a
 
@@ -14,7 +16,7 @@ install: all ambrogio.pc
 	@cp ambrogio.pc $(DESTDIR)/$(PREFIX)/lib/pkgconfig
 	@cp includes/Ambrogio $(DESTDIR)/$(PREFIX)/include
 	@cp $(TARGET).so.$(VERSION) $(TARGET).a $(DESTDIR)/$(PREFIX)/lib
-	@cd $(DESTDIR)/$(PREFIX)/lib && ldconfig -l $(TARGET).so.$(VERSION)
+	@cd $(DESTDIR)/$(PREFIX)/lib && ldconfig -l $(TARGET).so.$(VERSION) && ln -s $(TARGET).so.$(VMAJOR) $(TARGET).so
 
 $(TARGET).so.$(VERSION): $(OBJECTS)
 	@echo "CXX -shared $(TARGET).so.0.1"
@@ -66,6 +68,7 @@ clean: clean-output clean-objs clean-target clean-pc clean-test
 
 test: $(TARGET).so.$(VERSION)
 	@ldconfig -l $(TARGET).so.$(VERSION)
+	@ln -s $(TARGET).so.$(VMAJOR) $(TARGET).so
 	$(CXX) -std=c++0x -DUSE_CPP11=1 -L. $(CFLAGS) -o test/test test/test.cpp $(LDFLAGS) -lambrogio
 	test/test
 

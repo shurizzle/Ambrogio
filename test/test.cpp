@@ -13,6 +13,7 @@ GET("/merda/", {
 GET("/merda/sburro", ERROR(500))
 
 GET("/merda/:ciccio", response << "<html><body><h1>" << request["ciccio"] << "</h1></body></html>")
+PUT("/merda/:ciccio", response << "PUT " << request["ciccio"] << " in your ass.")
 
 //GET(RE("^/+merda(.+?)$"), response << request[0])
 
