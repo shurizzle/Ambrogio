@@ -35,10 +35,13 @@ namespace Ambrogio {
   }
 
   void
-  Application::__run_session(FCGX_Request *request, Router *router) {
+  Application::__run_session(FCGX_Request *request, Router *router, bool debug) {
     Request req(request);
     Response res(request->out, router);
-    printParams(request->envp);
+
+    if (debug)
+      printParams(request->envp);
+
     router->dispatch(req, res);
   }
 
@@ -48,7 +51,7 @@ namespace Ambrogio {
     FCGX_InitRequest(request, listen_socket, 0);
 
     while (FCGX_Accept_r(request) == 0) {
-      boost::thread(&::Ambrogio::Application::__run_session, request, &_router);
+      boost::thread(&::Ambrogio::Application::__run_session, request, &_router, debug);
       request = new FCGX_Request();
       FCGX_InitRequest(request, listen_socket, 0);
     }

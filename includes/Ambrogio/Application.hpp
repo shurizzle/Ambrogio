@@ -13,6 +13,7 @@ namespace Ambrogio {
     static void printParams(FCGX_ParamArray);
 
   public:
+    Application() : debug(false) {}
     void route(Method, std::string, FUNC);
     void route(Method, CPP11LIB::regex, FUNC);
     void HEAD(std::string, FUNC);
@@ -25,11 +26,13 @@ namespace Ambrogio {
     void PUT(CPP11LIB::regex, FUNC);
     void DELETE(std::string, FUNC);
     void DELETE(CPP11LIB::regex, FUNC);
-    void onError(int, void (*)(Request&, Response&));
-    void defaultHandler(void (*)(Request&, Response&));
+    void onError(int, FUNC);
+    void defaultHandler(FUNC);
     void run(std::string);
     void run(int);
-    static void __run_session(FCGX_Request*, Router*);
+    static void __run_session(FCGX_Request*, Router*, bool);
+
+    bool debug;
   };
 #undef FUNC
 

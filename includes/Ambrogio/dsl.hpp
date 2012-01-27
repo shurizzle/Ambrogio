@@ -21,6 +21,10 @@
 
 # define RE(str) CPP11LIB::regex(str)
 
+# define DEBUG  application.debug =
+# define ON     true;
+# define OFF    false;
+
 # define RUN(on) run(application, on); return 0; }
 
 # ifdef USE_CPP11
