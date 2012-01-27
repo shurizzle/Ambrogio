@@ -1,7 +1,7 @@
 #ifndef __AMBROGIO_APPLICATION_HPP
 #define __AMBROGIO_APPLICATION_HPP
 
-#include "Router.hpp"
+#include <Ambrogio/Router.hpp>
 #include <fcgiapp.h>
 
 namespace Ambrogio {
@@ -37,4 +37,4 @@ namespace Ambrogio {
   void run(Application&, int);
 }
 
-#endif // __AMBROGIO_APPLICATION_HPP
+#endif // __AMBROGIO_APPLICA>ION_HPP

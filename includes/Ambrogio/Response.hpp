@@ -6,7 +6,7 @@
 #include <map>
 #include <fcgi_stdio.h>
 
-#include "Request.hpp"
+#include <Ambrogio/Request.hpp>
 
 namespace Ambrogio {
   class Router;

@@ -8,8 +8,8 @@
 #include <boost/regex.hpp>
 #include <boost/assign.hpp>
 
-#include "Request.hpp"
-#include "Response.hpp"
+#include <Ambrogio/Request.hpp>
+#include <Ambrogio/Response.hpp>
 
 #define STATUS(res,stat)    res["Status"] = ::Ambrogio::Status[stat]
 #define ERROR(res,stat,req) {\

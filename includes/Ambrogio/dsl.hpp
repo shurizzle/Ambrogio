@@ -1,7 +1,7 @@
 #ifndef __AMBROGIO_DSL_HPP
 #define __AMBROGIO_DSL_HPP
 
-# include "Application.hpp"
+# include <Ambrogio/Application.hpp>
 
 # ifdef STATUS
 #   undef STATUS
