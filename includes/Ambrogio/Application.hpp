@@ -40,4 +40,4 @@ namespace Ambrogio {
   void run(Application&, int);
 }
 
-#endif // __AMBROGIO_APPLICA>ION_HPP
+#endif // __AMBROGIO_APPLICATION_HPP
