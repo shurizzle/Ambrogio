@@ -27,7 +27,21 @@
 
 # define RUN(on) run(application, on); return 0; }
 
-# ifdef USE_CPP11
+#if defined(__has_feature)
+# if __has_feature(cxx_lambdas)
+#   define HAS_LAMBDAS 1
+# else
+#   define HAS_LAMBDAS 0
+# endif
+#else
+# ifdef __GXX_EXPERIMENTAL_CXX0X__
+#   define HAS_LAMBDAS 1
+# else
+#   define HAS_LAMBDAS 0
+# endif
+#endif
+
+# if HAS_LAMBDAS
 #   define DEFAULT(body) application.defaultHandler([](Ambrogio::Request& request, Ambrogio::Response& response) { body; });
 #   define ON_ERROR(no,body) application.onError(no, [](Ambrogio::Request& request, Ambrogio::Response& response) { body; });
 #   define HEAD(path,body) application.HEAD(path, [](Ambrogio::Request& request, Ambrogio::Response& response) { body; });

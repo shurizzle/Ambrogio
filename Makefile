@@ -69,7 +69,7 @@ clean: clean-output clean-objs clean-target clean-pc clean-test
 test: $(TARGET).so.$(VERSION)
 	@ldconfig -l $(TARGET).so.$(VERSION)
 	-@ln -s $(TARGET).so.$(VMAJOR) $(TARGET).so 2>/dev/null
-	$(CXX) -std=c++0x -DUSE_CPP11=1 -L. $(CFLAGS) -o test/test test/test.cpp $(LDFLAGS) -lambrogio
-	test/test
+	$(CXX) -std=c++0x -L. $(CFLAGS) -o test/test test/test.cpp $(LDFLAGS) -lambrogio
+	LD_LIBRARY_PATH="." test/test
 
 .PHONY: all test clean install
